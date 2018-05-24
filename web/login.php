@@ -1,7 +1,7 @@
 <?php
-	require_once('db_connect.php');
-	require_once('login_register.php');
-	$db = db_connect();
+	//require_once('db_connect.php');
+	//require_once('login_register.php');
+	//$db = db_connect();
 ?>
 <!DOCTYPE html>
 <html>
