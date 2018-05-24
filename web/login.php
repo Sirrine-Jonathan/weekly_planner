@@ -1,6 +1,6 @@
 <?php
-	require_once('db_connect.php');
-	//$db = db_connect();
+	require "db_connect.php";
+	$db = db_connect();
 	//require_once('login_register.php');
 ?>
 <!DOCTYPE html>
