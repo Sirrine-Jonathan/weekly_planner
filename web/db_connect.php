@@ -1,12 +1,12 @@
 <?php
-	// function db_connect(){
+	function db_connect(){
 		$db = NULL:
 		
 		try {
 		
 			$dbUrl = getenv('DATABASE_URL');
 				
-			if (!isset($dbUrl) || empty($dbURL)){
+			if (!isset($dbUrl) || empty($dbUrl)){
 				echo "env variable null\n";
 				$dbUrl = ""; //local url (i.e. postgres://ta_user:ta_pass@localhost:5432/scripture_ta)
 			}
@@ -27,6 +27,6 @@
 			die();
 		}
 		
-		//return $db;
-	//}
+		return $db;
+	}
 ?>	
