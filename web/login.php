@@ -1,7 +1,7 @@
 <?php
-	//require_once('db_connect.php');
-	//require_once('login_register.php');
+	require_once('db_connect.php');
 	//$db = db_connect();
+	//require_once('login_register.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,7 +12,7 @@
 
 	<?php 
 	
-		$display = $_post['displayName'];
+		$display = $_POST['displayName'];
 		$email = $_POST['email'];
 		$pwHash = password_hash($_POST['password'], PASSWORD_BCRYPT);
 		
@@ -29,7 +29,7 @@
 		
 	?>
 	<div class="header">
-		<h1>Welcome, </h1>
+		<h1>Welcome, <?php echo $display ?></h1>
 	</div>
 </body>
 </html>
