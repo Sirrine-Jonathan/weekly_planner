@@ -40,8 +40,8 @@
 		//user_id here will be a session variable, hard coded as 1 for now
 		foreach ($db->query("SELECT * FROM user_preferences WHERE user_id='1'") as $row)
 		{
-			echo '<p>Dark Theme: ' . $row['dark_theme'] . '</p>';
-			echo '<p>Start on Mon: ' . $row['start_on_mon'] . '</p>';
+			echo '<p>Dark Theme: ' . (($row['dark_theme']) ? 'True':'False') . '</p>';
+			echo '<p>Start on Mon: ' . (($row['start_on_mon']) ? 'True':'False') . '</p>';
 		}
 	?>
 	</div>
@@ -51,9 +51,10 @@
 	
 		foreach ($db->query("SELECT * FROM tasks WHERE user_id='1'") as $row)
 		{
+			
 			echo '<p><b>' . $row['task_name'] . '</b></p>';
-			echo '<p>' . $row['due_date'] . '</p>';
-			echo '<p>' . $row['task_details'] . '</p>';
+			echo '<p>' . 'Due: ' . $row['due_date'] . '</p>';
+			echo '<p>' . 'Details: ' . $row['task_details'] . '</p>';
 		}
 	?>
 	</div>
