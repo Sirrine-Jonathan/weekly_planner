@@ -1,1 +1,2 @@
-CS 313 PHP Base Code
+##CS 313 PHP Base Code
+#Weekly Planner Project
