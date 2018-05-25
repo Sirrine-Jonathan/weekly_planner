@@ -6,8 +6,8 @@
 		$dbUrl = getenv('DATABASE_URL');
 			
 		if (!isset($dbUrl) || empty($dbUrl)){
-			echo "env variable null\n";
-			$dbUrl = ""; //local url (i.e. postgres://ta_user:ta_pass@localhost:5432/scripture_ta)
+			echo "env variable null<br />";
+			$dbUrl = "postgres://postgres:Milk Ham Postgres@localhost:5432/next_due_date"; 
 		}
 
 		// setup db
@@ -15,6 +15,11 @@
 		$dbHost = $dbopts["host"];
 		$dbPort = $dbopts["port"];
 		$dbUser = $dbopts["user"];
+		
+		echo $dbHost . '<br />';
+		echo $dbPort . '<br />';
+		echo $dbUser . '<br />';
+		
 		$dbPassword = $dbopts["pass"];
 		$dbName = ltrim($dbopts["path"],'/');
 		$db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
