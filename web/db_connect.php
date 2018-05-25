@@ -1,6 +1,6 @@
 <?php
 	function db_connect(){
-		$db = NULL:
+		$db = NULL;
 		
 
 		$dbUrl = getenv('DATABASE_URL');
