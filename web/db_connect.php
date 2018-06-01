@@ -6,7 +6,7 @@
 		$dbUrl = getenv('DATABASE_URL');
 			
 		if (!isset($dbUrl) || empty($dbUrl)){
-			echo "env variable null<br />";
+			echo "in local database<br />";
 			$dbUrl = "postgres://postgres:Milk Ham Postgres@localhost:5432/next_due_date"; 
 		}
 
@@ -21,7 +21,6 @@
 		$db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		
 		return $db;
 	}
 ?>	

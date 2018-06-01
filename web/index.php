@@ -1,3 +1,8 @@
+<?php
+	require "db_connect.php";
+	$db = db_connect();
+	session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,13 +12,15 @@
 	<div class="header">
 		<h1>Weekly Planner</h1>
 	</div>
-	<form method="POST" action="login.php">
-		<h3>Log In / Sign In</h3>
-		<input type="text" id="displayNameInput" name="displayName" placeholder="Display Name" /><br />
-		<input type="text" id="emailInput" name="email" placeholder="email@provider.suf" /><br />
-		<input type="password" id="passwordInput" name="password" placeholder="password" /><br />
-		<input type="submit" name="login" value="Log In" /> 
-		<input type="submit" name="register" value="Register" />
-	</form>
+	<?php
+	
+		// check if user is logged in
+		if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
+			include 'content.php';
+		} else {
+			include 'signupForm.php';
+		}
+	?>
+
 </body>
 </html>
