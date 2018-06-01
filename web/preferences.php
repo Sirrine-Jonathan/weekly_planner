@@ -11,10 +11,12 @@
 <body>
 	<h3>User Preferences</h3>
 	<?php
-		//user_id here will be a session variable, hard coded as 1 for now
-		echo "<form>";
 		foreach ($db->query("SELECT * FROM user_preferences WHERE user_id='" . $_SESSION['user_id'] . "'") as $row)
 		{
+			$row['
+		}
+		//user_id here will be a session variable, hard coded as 1 for now
+		echo "<form method>";
 			echo '<p>Theme: '; 
 			$darkTheme = (($row['dark_theme']) ? true:false); 
 			echo '<input type="radio" name="theme" value="dark" ';
@@ -36,7 +38,6 @@
 			'</p>';
 			
 			echo "<input type='submit' value='Save Changes' />";
-		}
 		echo "</form>";
 	?>
 	</div>

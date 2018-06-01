@@ -34,6 +34,7 @@
 		$stmt->bindValue(':user_id', $lastIndex);
 		$stmt->bindValue(':dark_theme', 'f');
 		$stmt->bindValue(':start_on_mon', 't');
+		$stmt->execute();
 		
 		return $lastIndex;
 	}

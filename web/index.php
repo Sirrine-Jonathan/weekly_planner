@@ -6,11 +6,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Weekly Planner</title>
+<title>Next Due Date</title>
 </head>
 <body>
 	<div class="header">
-		<h1>Weekly Planner</h1>
+		<h1>Next Due Date</h1>
 	</div>
 	<?php
 	
