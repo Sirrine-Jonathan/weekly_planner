@@ -41,8 +41,18 @@
 	
 	// takes user info from form
 	// finds index of user row that matches data
-	function loginUser($db, $email, $pwHash, $display){
+	function loginUser($db, $email, $pwHash){
 		
+		// check if user and pw combo exists
+		$nRows = $db->prepare('SELECT count(*) FROM users WHERE email=:email AND password=:password');
+		$nRows->bindValue(':email', $email);
+		$nRows->bindValue(':password', $pwHash);
+		$count = $nRows->execute();
+		
+		if ($count <= 0)
+			throw new Exception("invalid password or username");
+		
+		// get the row  id where it exists
 		$sql = 'SELECT user_id FROM users WHERE email=:email AND password=:password';
 		$stmt = $db->prepare($sql);
 		
@@ -57,11 +67,11 @@
 			$_SESSION['err_msg'] = $ex->getMessage();
 			throw $ex;
 		}
-		if ($stmt->rowCount() <= 0)
-			throw new Exception("invalid password or username");
-		else {
-			$_SESSION['error'] = false;
-		}
+		
+
+
+		$_SESSION['error'] = false;
+
 		return $userId;
 	}
 	
@@ -75,7 +85,7 @@
 		
 		if (isset($_POST['login'])) {
 			try {
-				$user_id = loginUser($db, $email, $pwHash, $display);
+				$user_id = loginUser($db, $email, $pwHash);
 				$_SESSION["user_id"] = $user_id;
 				echo "Logged in<br />";
 			} catch (PDOException $ex) {
@@ -98,6 +108,6 @@
 		}
 		header('location:index.php');
 	} else {
-		echo "what?";
+		header('location:index.php');
 	}
 ?>

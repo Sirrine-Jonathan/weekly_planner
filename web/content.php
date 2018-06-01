@@ -1,12 +1,11 @@
 <?php
 	echo "<script>" .
-	"function logout(){ document.location.href = 'logout.php' }" . 
-	"</script>";
+			"function logout(){ document.location.href = 'logout.php' }" . 
+		"</script>";
+		
 	echo "<div class='header'>" . 
 		 "<h1>Welcome</h1>" . 
 		 "<div><input type='button' value='Log out' onclick='logout()' /></div>";
-		 
-	echo "<a href='preferences.php'>user preferences</a></div>";
 	
 	echo "<div><h3>User Tasks</h3>";
 	
