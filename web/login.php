@@ -24,6 +24,7 @@
 		} catch (PDOException $ex){
 			$_SESSION['error'] = true;
 			$_SESSION['err_msg'] = $ex->getMessage();
+			throw $ex;
 		}
 		$lastIndex = $db->lastInsertId();
 		
@@ -50,11 +51,16 @@
 		$userId = NULL;
 		try {
 			$userId = $stmt->execute();
-		} catch (PDOException $exp){
+		} catch (PDOException $ex){
 			$_SESSION['error'] = true;
 			$_SESSION['err_msg'] = $ex->getMessage();
+			throw $ex;
 		}
-		
+		if ($stmt->rowCount() <= 0)
+			throw new Exception("invalid password or username");
+		else {
+			$_SESSION['error'] = false;
+		}
 		return $userId;
 	}
 	
@@ -71,7 +77,10 @@
 				$user_id = loginUser($db, $email, $pwHash, $display);
 				$_SESSION["user_id"] = $user_id;
 				echo "Logged in<br />";
-			} catch (PDOException $exp) {
+			} catch (PDOException $ex) {
+				$_SESSION['error'] = true;
+				$_SESSION['err_msg'] = $ex->getMessage();
+			} catch (Exception $ex) {
 				$_SESSION['error'] = true;
 				$_SESSION['err_msg'] = $ex->getMessage();
 			}
@@ -81,15 +90,12 @@
 				echo "current user id: " . $user_id . "<br />";
 				$_SESSION["user_id"] = $user_id;
 				echo "Registered<br />";
-			} catch (PDOException $exp) {
+			} catch (PDOException $ex) {
 				$_SESSION['error'] = true;
 				$_SESSION['err_msg'] = $ex->getMessage();
 			}
 		}
-		if (isset($_SESSION['user_id']) && !$_SESSION['error'])
-			header('location:index.php');
-		else if ($_SESSION['error'])
-			echo $_SESSION['err_msg'];
+		header('location:index.php');
 	} else {
 		echo "what?";
 	}

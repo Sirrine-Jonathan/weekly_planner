@@ -19,6 +19,10 @@
 			include 'content.php';
 		} else {
 			include 'signupForm.php';
+			if (isset($_SESSION['error']) && $_SESSION['error']){
+				echo $_SESSION['err_msg'];
+				$_SESSION['error'] = false;
+			}
 		}
 	?>
 
