@@ -18,26 +18,17 @@
 		}
 		//user_id here will be a session variable, hard coded as 1 for now
 		echo "<form method>";
-			echo '<p>Theme: '; 
-			$darkTheme = $_SESSION['dark_theme']; 
-			echo '<input type="radio" name="theme" value="dark" ';
-			if ($darkTheme) echo 'selected';
-			echo ' /';
-			echo '<input type="radio" name="theme" value="light" ';
-			if (!$darkTheme) echo 'selected';
-			echo ' />' . 
-			'</p>';
-			
-			echo '<p>Start On: '; 
-			$startOnMon = $_SESSION['start_on_mon']; 
-			echo '<input type="radio" name="start_day" value="mon" ';
-			if ($startOnMon) echo 'selected';
+			echo '<p>Theme: <br />'; ; 
+			echo '<label>Dark Theme</lable><input type="checkbox" name="theme" value="dark" ';
+			if ($_SESSION['dark_theme']) echo 'checked';
 			echo ' />';
-			echo '<input type="radio" name="start_day" value="sun" ';
-			if (!$startOnMon) echo 'selected';
-			echo ' />' . 
 			'</p>';
 			
+			echo '<p>Start On: <br />'; 
+			echo '<label>Start On Mon</label><input type="checkbox" name="start_day" value="mon" ';
+			if ($_SESSION['start_on_mon']) echo 'checked';
+			echo ' />';
+			'</p>';
 			echo "<input type='submit' value='Save Changes' />";
 		echo "</form>";
 	?>
