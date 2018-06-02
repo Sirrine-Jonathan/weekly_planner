@@ -10,14 +10,13 @@
 	// takes user info from form
 	// creates a new row if constraints are met
 	// returns index of new row
-	function registerUser($db, $email, $pwHash, $display){
+	function registerUser($db, $email, $pwHash){
 		
-		$sql = 'INSERT INTO users (email, password, display_name, creation_date) VALUES (:email, :password, :display_name, CURRENT_TIMESTAMP) RETURNING user_id';
+		$sql = 'INSERT INTO users (email, password, creation_date) VALUES (:email, :password, CURRENT_TIMESTAMP) RETURNING user_id';
 		$stmt = $db->prepare($sql);
 		
 		$stmt->bindValue(':email', $email);
 		$stmt->bindValue(':password', $pwHash);
-		$stmt->bindValue(':display_name', $display);
 		
 		try {
 			$stmt->execute();
@@ -41,53 +40,43 @@
 	
 	// takes user info from form
 	// finds index of user row that matches data
-	function loginUser($db, $email, $pwHash){
+	function loginUser($db, $email, $password){
 		
-		// check if user and pw combo exists
-		$nRows = $db->prepare('SELECT count(*) FROM users WHERE email=:email AND password=:password');
-		$nRows->bindValue(':email', $email);
-		$nRows->bindValue(':password', $pwHash);
-		$count = $nRows->execute();
-		
-		if ($count <= 0)
-			throw new Exception("invalid password or username");
-		
-		// get the row  id where it exists
-		$sql = 'SELECT user_id FROM users WHERE email=:email AND password=:password';
+		// get the row id where it exists
+		$sql = 'SELECT user_id,password FROM users WHERE email=:email';
 		$stmt = $db->prepare($sql);
-		
 		$stmt->bindValue(':email', $email);
-		$stmt->bindValue(':password', $pwHash);
+		$stmt->execute();
+		$row = $stmt->fetch();
 		
-		$userId = NULL;
-		try {
-			$userId = $stmt->execute();
-		} catch (PDOException $ex){
+		if ($row && password_verify($password, $row['password'])){
+			$userId = $row['user_id'];
+			echo "User Id: " . $userId . "<br />";
+			$_SESSION['error'] = false;
+			return $userId;
+		} else {
+			
+			//debug 
+			var_dump($row);
+			
 			$_SESSION['error'] = true;
-			$_SESSION['err_msg'] = $ex->getMessage();
-			throw $ex;
+			$_SESSION['err_msg'] = "invalid password or username";
+			throw new Exception("invalid password or username");
 		}
-		
-
-
-		$_SESSION['error'] = false;
-
-		return $userId;
 	}
 	
 	// determine if user wants to log in or register
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		
 		// get form variables from login page
-		$display = $_POST['displayName'];
 		$email = $_POST['email'];
-		$pwHash = password_hash($_POST['password'], PASSWORD_BCRYPT);
+		$password = $_POST['password'];
+		$pwHash = password_hash($password, PASSWORD_DEFAULT);
 		
 		if (isset($_POST['login'])) {
 			try {
-				$user_id = loginUser($db, $email, $pwHash);
+				$user_id = loginUser($db, $email, $password);
 				$_SESSION["user_id"] = $user_id;
-				echo "Logged in<br />";
 			} catch (PDOException $ex) {
 				$_SESSION['error'] = true;
 				$_SESSION['err_msg'] = $ex->getMessage();
@@ -97,10 +86,8 @@
 			}
 		} else {
 			try {
-				$user_id = registerUser($db, $email, $pwHash, $display);
-				echo "current user id: " . $user_id . "<br />";
+				$user_id = registerUser($db, $email, $pwHash);
 				$_SESSION["user_id"] = $user_id;
-				echo "Registered<br />";
 			} catch (PDOException $ex) {
 				$_SESSION['error'] = true;
 				$_SESSION['err_msg'] = $ex->getMessage();

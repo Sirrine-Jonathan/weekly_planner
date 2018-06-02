@@ -8,12 +8,6 @@
 		$stmt->bindValue(':start_on_mon', $start_on_mon);
 		$stmt->bindValue(':dark_theme', $dark_theme);
 		$stmt->bindValue(':user_id', $_SESSION['user_id']);
-
-		try {
-			$stmt->execute();
-		} catch (PDOException $ex){
-			throw $ex;
-		}
-		return true;
+		$stmt->execute();
 	}
 ?>

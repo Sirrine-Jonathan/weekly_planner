@@ -8,6 +8,12 @@
 <html>
 <head>
 <title>Next Due Date</title>
+	<?php 
+		if (isset($_SESSION['dark_theme']) && $_SESSION['dark_theme'])
+			echo "<link rel='stylesheet' href='dark-theme.css' />";
+		else 
+			echo "<link rel='stylesheet' href='light-theme.css' />";
+	?>
 </head>
 <body>
 	<div class="header">
@@ -18,6 +24,7 @@
 			}
 		?>
 	</div>
+	<div class="content">
 	<?php
 		// check if user is logged in
 		if ($loggedin){
@@ -30,6 +37,7 @@
 			}
 		}
 	?>
+	</div>
 
 </body>
 </html>

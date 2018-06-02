@@ -6,7 +6,6 @@
 		$dbUrl = getenv('DATABASE_URL');
 			
 		if (!isset($dbUrl) || empty($dbUrl)){
-			echo "in local database<br />";
 			$dbUrl = "postgres://postgres:Milk Ham Postgres@localhost:5432/next_due_date"; 
 		}
 

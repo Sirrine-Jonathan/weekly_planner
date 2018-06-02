@@ -13,59 +13,59 @@
 <html>
 <head>
 	<title>preferences</title>
-</head>
-<body>
-	<h3>User Preferences</h3>
-	
-	<?php
-		include 'nav.php';
-		
-		$preferencesUpdated = false;
-		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	<?php 
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			try {
-				if (isset($_POST['theme']) && isset($_POST['start_day'])){
-					$result = updatePreferences($db, $_POST['theme'], $_POST['start_day']);
-					if ($result){
-						echo "prefernces saved";
-						$preferencesUpdated = true;
-					}
-				}
-			} catch (Exception $ex) {
-				echo $ex.getMessage();
-			};
-
+				$dark = (isset($_POST['theme'])) ? 't':'f';
+				$mon = (isset($_POST['start_day'])) ? 't':'f';
+				$result = updatePreferences($db, $dark, $mon);
+			} catch (Exception $e){
+				echo $e->getMessage();
+			}
 		}
 
 		if (isset($_SESSION['user_id'])){
 			foreach ($db->query("SELECT * FROM user_preferences WHERE user_id='" . ((int) $_SESSION['user_id']) . "'") as $row)
 			{
-				$_SESSION['dark_theme'] = $row['dark_theme'];
-				$_SESSION['start_on_mon'] = $row['start_on_mon'];
-				echo "sesson variables updated";
+				$_SESSION['dark_theme'] = ($row['dark_theme'] == 't');
+				$_SESSION['start_on_mon'] = ($row['start_on_mon'] == 't');
 			}
-		}
+		}	
+
+		if (isset($_SESSION['dark_theme']) && $_SESSION['dark_theme'])
+			echo "<link rel='stylesheet' href='dark-theme.css' />";
+		else 
+			echo "<link rel='stylesheet' href='light-theme.css' />";
+	?>
+</head>
+<body>
+	<div class="header">
+	<h1>User Preferences</h1>
+	
+	<?php
+		include 'nav.php';
+	?>
+	</div>
+	<div class="content">
+	<?php
+
 		
 		echo "<form method='POST' action='preferences.php'>";
 			echo '<p>' . 
-			'<label>Dark Theme</lable><input type="checkbox" name="theme" value="dark" ';
+			'<label>Dark Theme</lable><input type="checkbox" name="theme"';
 			if ($_SESSION['dark_theme']) echo 'checked';
 			echo ' />' . 
 			'</p>';
 			
 			echo '<p>' .
-			'<label>Start On Mon</label><input type="checkbox" name="start_day" value="mon" ';
+			'<label>Start On Mon</label><input type="checkbox" name="start_day"';
 			if ($_SESSION['start_on_mon']) echo 'checked';
 			echo ' />' .
 			'</p>';
 			
 			echo "<p><input type='submit' value='Save Changes' /></p>";
 		echo "</form>";
-		if ($preferencesUpdated){
-			echo "<p>Preferences Saved</p>";
-		}
 	?>
-	
-
 	</div>
 </body>
 </html>
