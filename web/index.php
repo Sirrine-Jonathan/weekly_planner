@@ -24,7 +24,7 @@
 			}
 		?>
 	</div>
-	<div class="content">
+	<div class="content" id="main_display">
 	<?php
 		// check if user is logged in
 		if ($loggedin){
