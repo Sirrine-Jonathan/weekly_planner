@@ -1,3 +1,13 @@
+
+<script>
+    function remove_task(e){
+        let remove = confirm("are you sure you want to delete this task?");
+        if (remove){
+            let task_id = e.target.parentElement.dataset.id;
+            window.location.href = "removeTask.php?task=" + task_id;
+        }
+    }
+</script>
 <?php
 	echo "<script>" .
 			"function logout(){ document.location.href = 'logout.php' }" . 
@@ -17,10 +27,14 @@
 		
 		//while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		foreach ($phpData as $row){
+			echo '<div class="task_div" data-id="' . $row['task_id'] . '" style="border-color:' . $row['color'] . '">';
+			echo '<span class="remove_task" style="float: right; color: red; cursor: pointer;"' .
+			' onclick="remove_task(event)">&#x274C</span>';
 			echo '<p><b>' . $row['task_name'] . '</b></p>';
 			echo '<p>' . 'Due: ' . $row['due_date'] . '</p>';
 			echo '<p>' . 'Duration: ' . $row['task_duration'] . ' hours</p>';
 			echo '<p>' . 'Details: ' . $row['task_details'] . '</p>';
+			echo '</div>';
 		}
 		
 	echo "</div>";
@@ -34,7 +48,8 @@
 	data.forEach((task) => {
 		basics.push({
 			name: task['task_name'],
-			value: (new Date(task['due_date'])).getTime()
+			value: (new Date(task['due_date'])).getTime(),
+			color: task['color']
 		});
 	})
 	
@@ -72,6 +87,7 @@
 	basics.forEach((task) => {
 		let offset = task.value - min;
 		let ratio = offset / range;
+		ctx.strokeStyle = task.color;
 		ctx.beginPath();
 		ctx.arc(x + (OFFSET / 2), (ratio * C_HEIGHT) + (OFFSET / 2), RADIUS, 0, 2 * Math.PI);
 		ctx.stroke();

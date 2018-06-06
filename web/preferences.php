@@ -13,6 +13,9 @@
 <html>
 <head>
 	<title>preferences</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel='stylesheet' href='baseStyle.css' />
 	<?php 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			try {
@@ -51,19 +54,19 @@
 
 		
 		echo "<form method='POST' action='preferences.php'>";
-			echo '<p>' . 
-			'<label>Dark Theme</lable><input type="checkbox" name="theme"';
+			echo '<p>' .
+			'<input class="form-check-input" type="checkbox" name="theme"';
 			if ($_SESSION['dark_theme']) echo 'checked';
 			echo ' />' . 
-			'</p>';
+			'<label class="form-check-label">Dark Theme</label></p>';
 			
 			echo '<p>' .
-			'<label>Start On Mon</label><input type="checkbox" name="start_day"';
+			'<input class="form-check-input" type="checkbox" name="start_day"';
 			if ($_SESSION['start_on_mon']) echo 'checked';
 			echo ' />' .
-			'</p>';
+			'<label class="form-check-label">Start On Mon</label></p>';
 			
-			echo "<p><input type='submit' value='Save Changes' /></p>";
+			echo "<p><input type='submit' class='btn' value='Save Changes' /></p>";
 		echo "</form>";
 	?>
 	</div>

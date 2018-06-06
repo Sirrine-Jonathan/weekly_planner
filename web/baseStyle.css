@@ -1,0 +1,45 @@
+.content {
+    width: 60%;
+    margin: 0 auto;
+    border-radius: 5px;
+    padding:15px;
+}
+
+.task_div {
+    padding: 2%;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 5px;
+    margin: 2%;
+}
+
+.nav-span {
+    margin: 50px;
+}
+
+.nav-span a {
+    text-decoration: none;
+    border-width: 2px;
+    border-style: solid;
+    padding: 5px;
+}
+
+.btn {
+    padding: 5px;
+}
+
+h1 {
+    text-align: center;
+}
+
+nav {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.remove_task {
+    float: right;
+    color: red;
+    border: 1px solid black;
+}

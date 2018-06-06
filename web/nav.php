@@ -1,4 +1,9 @@
 <?php
+
+// index.php
+// preferences.php
+// addTask.php
+
 	echo '<nav>' .
 		'<span class="nav-span"><a href="index.php">Home</a></span>' .
 		'<span class="nav-span"><a href="preferences.php">Preferences</a></span>' .
