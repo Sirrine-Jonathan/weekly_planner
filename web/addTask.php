@@ -26,7 +26,7 @@ integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh
 	</div>
 	<div class="content">
 	<?php
-		include 'addTaskForm.php';
+		include 'forms/addTaskForm.php';
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			addTask($db, $_SESSION['user_id'], $_POST['taskName'], $_POST['taskDetails'], $_POST['taskDueDate'], $_POST['taskDuration']);
 

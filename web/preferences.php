@@ -42,7 +42,7 @@
 	?>
 </head>
 <body>
-	<div class="header">
+	<div class="header jumbotron">
 	<h1>User Preferences</h1>
 	
 	<?php

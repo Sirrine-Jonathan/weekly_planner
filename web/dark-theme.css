@@ -16,3 +16,12 @@ body {
 	color: white;
 	border-color: white;
 }
+
+.btn {
+	color: black;
+}
+
+.nav-span a {
+    color: black;
+    border-color: black;
+}

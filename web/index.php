@@ -18,6 +18,19 @@ integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh
 			echo "<link rel='stylesheet' href='light-theme.css' />";
 		}
 	?>
+<script>
+    // function to remove each task
+    function remove_task(e){
+        let remove = confirm("are you sure you want to delete this task?");
+        if (remove){
+            let task_id = e.target.parentElement.dataset.id;
+            window.location.href = "removeTask.php?task=" + task_id;
+        }
+    }
+
+    // function to log out
+    function logout(){ document.location.href = 'logout.php' }
+</script>
 </head>
 <body>
 	<div class="header jumbotron">
@@ -34,7 +47,7 @@ integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh
 		if ($loggedin){
 			include 'content.php';
 		} else {
-			include 'signupForm.php';
+			include 'forms/signupForm.php';
 			if (isset($_SESSION['error']) && $_SESSION['error']){
 				echo $_SESSION['err_msg'];
 				$_SESSION['error'] = false;

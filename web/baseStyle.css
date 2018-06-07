@@ -24,12 +24,25 @@
     padding: 5px;
 }
 
+input {
+    margin: 5px;
+    min-width: 23%;
+}
+
+input[type="checkbox"] {
+    width: 25px;
+    min-width: 25px;
+}
+
 .btn {
     padding: 5px;
+    margin: 5px;
+    min-width: 12%;
 }
 
 h1 {
     text-align: center;
+    padding-bottom: 2%;
 }
 
 nav {
@@ -38,8 +51,3 @@ nav {
     text-align: center;
 }
 
-.remove_task {
-    float: right;
-    color: red;
-    border: 1px solid black;
-}
