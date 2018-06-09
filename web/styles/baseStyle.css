@@ -13,6 +13,17 @@
     margin: 2%;
 }
 
+.task_name {
+    cursor: pointer;
+}
+
+.remove_task {
+    font-size: 2em;
+    float: right;
+    color: red;
+    cursor: pointer;
+}
+
 .nav-span {
     margin: 50px;
 }
@@ -22,6 +33,10 @@
     border-width: 2px;
     border-style: solid;
     padding: 5px;
+}
+
+.nav-span a:hover {
+    background-color: lightsteelblue;
 }
 
 input {

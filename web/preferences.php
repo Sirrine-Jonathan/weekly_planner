@@ -15,7 +15,7 @@
 	<title>preferences</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel='stylesheet' href='baseStyle.css' />
+    <link rel='stylesheet' href='styles/baseStyle.css' />
 	<?php 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			try {
@@ -36,9 +36,9 @@
 		}	
 
 		if (isset($_SESSION['dark_theme']) && $_SESSION['dark_theme'])
-			echo "<link rel='stylesheet' href='dark-theme.css' />";
+			echo "<link rel='stylesheet' href='styles/dark-theme.css' />";
 		else 
-			echo "<link rel='stylesheet' href='light-theme.css' />";
+			echo "<link rel='stylesheet' href='styles/light-theme.css' />";
 	?>
 </head>
 <body>

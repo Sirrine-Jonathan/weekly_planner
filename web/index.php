@@ -3,6 +3,12 @@
 	$db = db_connect();
 	session_start();
 	$loggedin = (isset($_SESSION['user_id']) && !empty($_SESSION['user_id']));
+    if ($loggedin){
+        foreach ($db->query("SELECT * FROM user_preferences WHERE user_id='" . ((int) $_SESSION['user_id']) . "'") as $row)
+        {
+            $_SESSION['dark_theme'] = ($row['dark_theme'] == 't');
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,12 +16,12 @@
 <title>Next Due Date</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link rel='stylesheet' href='baseStyle.css' />
+<link rel='stylesheet' href='styles/baseStyle.css' />
 	<?php 
 		if (isset($_SESSION['dark_theme']) && $_SESSION['dark_theme']){
-			echo "<link rel='stylesheet' href='dark-theme.css' />";
+			echo "<link rel='stylesheet' href='styles/dark-theme.css' />";
 		} else {
-			echo "<link rel='stylesheet' href='light-theme.css' />";
+			echo "<link rel='stylesheet' href='styles/light-theme.css' />";
 		}
 	?>
 <script>

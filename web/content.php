@@ -17,18 +17,29 @@
 
 		foreach ($phpData as $row){
 			echo '<div class="task_div" data-id="' . $row['task_id'] . '" style="border-color:' . $row['color'] . '">';
-			echo '<span class="remove_task" style="float: right; color: red; cursor: pointer;"' .
-			' onclick="remove_task(event)">&#x274C</span>';
-			echo '<p><b>' . $row['task_name'] . '</b></p>';
-			echo '<p>' . 'Due: ' . $row['due_date'] . '</p>';
+			echo '<span class="remove_task" onclick="remove_task(event)">&times;</span>';
+			echo '<p class="task_name" onclick="toggleDetails(event)"><b>' . $row['task_name'] . '</b></p>';
+			echo '<div class="details" style="display: block"><p>' . 'Due: ' . $row['due_date'] . '</p>';
 			echo '<p>' . 'Duration: ' . $row['task_duration'] . ' minute(s), ' . ($row['task_duration'] / 60) . ' hour(s)</p>';
-			echo '<p>' . 'Details: ' . $row['task_details'] . '</p>';
+			echo '<p>' . 'Details: ' . $row['task_details'] . '</div></p>';
 			echo '</div>';
 		}
 
 	echo "</div>";
 ?>
 <script type="text/javascript">
+
+    function toggleDetails(e){
+        let div = e.target;
+        while (!div.classList.contains('task_div')){
+            div = div.parentElement;
+        }
+        let details = div.querySelector(".details");
+        if (details.style.display == "none")
+            details.style.display = "block";
+        else
+            details.style.display = "none";
+    }
 
 	// get data from php and postgres
 	var data = <?php echo json_encode($phpData) ?>;

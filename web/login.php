@@ -17,14 +17,8 @@
 		
 		$stmt->bindValue(':email', $email);
 		$stmt->bindValue(':password', $pwHash);
-		
-		try {
-			$stmt->execute();
-		} catch (PDOException $ex){
-			$_SESSION['error'] = true;
-			$_SESSION['err_msg'] = $ex->getMessage();
-			throw $ex;
-		}
+
+		$stmt->execute();
 		$lastIndex = $db->lastInsertId();
 		
 		$sql = 'INSERT INTO user_preferences (user_id, dark_theme, start_on_mon) VALUES (:user_id, :dark_theme, :start_on_mon)';
@@ -48,20 +42,17 @@
 		$stmt->bindValue(':email', $email);
 		$stmt->execute();
 		$row = $stmt->fetch();
+
+		if (!$row){
+		    throw new Exception("user not found");
+		}
 		
 		if ($row && password_verify($password, $row['password'])){
 			$userId = $row['user_id'];
 			echo "User Id: " . $userId . "<br />";
-			$_SESSION['error'] = false;
 			return $userId;
 		} else {
-			
-			//debug 
-			var_dump($row);
-			
-			$_SESSION['error'] = true;
-			$_SESSION['err_msg'] = "invalid password or username";
-			throw new Exception("invalid password or username");
+			throw new Exception("invalid password");
 		}
 	}
 	
@@ -78,8 +69,12 @@
 				$user_id = loginUser($db, $email, $password);
 				$_SESSION["user_id"] = $user_id;
 			} catch (PDOException $ex) {
+			    $msg = $ex->getCode;
+			    if (false){
+                    $msg = "User Already Exits";
+			    }
 				$_SESSION['error'] = true;
-				$_SESSION['err_msg'] = $ex->getMessage();
+				$_SESSION['err_msg'] = $msg;
 			} catch (Exception $ex) {
 				$_SESSION['error'] = true;
 				$_SESSION['err_msg'] = $ex->getMessage();
@@ -89,8 +84,12 @@
 				$user_id = registerUser($db, $email, $pwHash);
 				$_SESSION["user_id"] = $user_id;
 			} catch (PDOException $ex) {
+			    $msg = $ex->getMessage();
+			    if ($ex->getCode() == 23505){
+                    $msg = "User Already Exits";
+			    }
 				$_SESSION['error'] = true;
-				$_SESSION['err_msg'] = $ex->getMessage();
+				$_SESSION['err_msg'] = $msg;
 			}
 		}
 		header('location:index.php');
