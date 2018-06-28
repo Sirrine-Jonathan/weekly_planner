@@ -61,6 +61,7 @@ integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh
 		}
 	?>
 	</div>
-
+	<div id="bubbleChart"></div>
+	<script src="canvasjs-2.1.3/canvasjs.min.js"></script>
 </body>
 </html>

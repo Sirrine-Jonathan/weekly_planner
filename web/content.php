@@ -29,6 +29,58 @@
 ?>
 <script type="text/javascript">
 
+
+
+window.onload = function () {
+
+	// get data from php and postgres
+	var data = <?php echo json_encode($phpData) ?>;
+	var basics = [];
+	/*
+https://canvasjs.com/
+	*/
+	
+	data.forEach((task) => {
+		basics.push({
+			name: task['task_name'],
+			x: (new Date(task['due_date']).getTime()),
+			y: task['task_duration'] / 60,
+			z: 10
+			//color: task['color']
+		});
+		console.log(task);
+	})
+
+	var chart = new CanvasJS.Chart("bubbleChart", {
+		animationEnabled: true,
+		title:{
+			text: "Upcoming Tasks"
+		},
+		axisX: {
+			title:"Unix Timestamp"
+		},
+		axisY: {
+			title:"Task Duration"
+		},
+		legend:{
+			horizontalAlign: "legend"
+		},
+		data: [{
+			xValueType: "dateTime",
+			type: "bubble",
+			showInLegend: true,
+			legendText: "legend text",
+			legendMarkerType: "circle",
+			legendMarkerColor: "grey",
+			toolTipContent: "<b>{ name }</b><br/>X value: { x }<br/> Y value: {y}<br/> Z value: {z}",
+			dataPoints: basics
+		}]
+	});
+	chart.render();
+
+}
+
+
     function toggleDetails(e){
         let div = e.target;
         while (!div.classList.contains('task_div')){
@@ -41,63 +93,7 @@
             details.style.display = "none";
     }
 
-	// get data from php and postgres
-	var data = <?php echo json_encode($phpData) ?>;
-	var basics = [];
-	data.forEach((task) => {
-		basics.push({
-			name: task['task_name'],
-			value: (new Date(task['due_date'])).getTime(),
-			color: task['color']
-		});
-	})
-	
-	// soonest timestamp first
-	/*
-	basics = basics.sort(function(a, b) {
-		return b.value < a.value;
-	});
-	*/
 
-	// TESTING
-	/*
-	basics = [
-
-	    {
-	        'name': 'one',
-	        'value': 1528347600000,
-	        'color': '#000000'
-	    },
-	    {
-            'name': 'two',
-            'value': 1528348000000,
-            'color': '#000000'
-        },
-
-        {
-            'name': 'three',
-            'value': 1528349000000,
-            'color': '#000000'
-        },
-
-        {
-            'name': 'four',
-            'value': 1528349400000,
-            'color': '#000000'
-        },
-
-        {
-            'name': 'five',
-            'value': 1528349900000,
-            'color': '#000000'
-        },
-        {
-            'name': 'four',
-            'value': 1528350000000,
-            'color': '#000000'
-        },
-	];
-	*/
 
 
 	// build display
